@@ -6,41 +6,48 @@ using UnityEngine.UI;
 public class SquareController : MonoBehaviour
 {
     GameManager manager;
+    UIManager uiManager;
+
+    public List<SquareController> neighbors;
+
+    public GameObject crossObject;
 
     public int xPosition;
     public int yPosition;
-    public List<SquareController> neighbors;
+
+    public bool _isChosen;
 
     private void Awake()
     {
         manager = FindObjectOfType<GameManager>();
+        uiManager = FindObjectOfType<UIManager>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        Invoke("CheckForNeighbors", 0.1f);
+        CheckForNeighbors();
     }
 
     void CheckForNeighbors()
     {
         List<GameObject> currentSquaresList = manager.lists.currentSquares;
-        int currentSquares = manager.lists.currentSquares.Count;
-        for (int i = 0; i < currentSquares; i++)
+        int currentSquaresCount = manager.lists.currentSquares.Count;
+        for (int i = 0; i < currentSquaresCount; i++)
         {
             SquareController squareController = currentSquaresList[i].GetComponent<SquareController>();
-            if (squareController.xPosition == this.xPosition - 1 && squareController.yPosition == this.yPosition && !neighbors.Contains(squareController))
-                neighbors.Add(squareController);
-            if (squareController.yPosition == this.yPosition + 1 && squareController.xPosition == this.xPosition && !neighbors.Contains(squareController))
-                neighbors.Add(squareController);
-            if (squareController.xPosition == this.xPosition + 1 && squareController.yPosition == this.yPosition && !neighbors.Contains(squareController))
-                neighbors.Add(squareController);
-            if (squareController.yPosition == this.yPosition - 1 && squareController.xPosition == this.xPosition && !neighbors.Contains(squareController))
-                neighbors.Add(squareController);
+            PositionCheck(squareController, -1, 0);
+            PositionCheck(squareController, 0, -1);
+            PositionCheck(squareController, 1, 0);
+            PositionCheck(squareController, 0, 1);
         }
     }
 
-    // Update is called once per frame
+    void PositionCheck(SquareController squareController, int plusPosX, int plusPosY)
+    {
+        if (squareController.xPosition == this.xPosition + plusPosX && squareController.yPosition == this.yPosition + plusPosY)
+            neighbors.Add(squareController);
+    }
+
     void Update()
     {
 
@@ -48,6 +55,69 @@ public class SquareController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("cross png");
+        _isChosen = true;
+        crossObject.GetComponent<Animator>().SetBool("isChosen", true);
+        EventManager.Broadcast(GameEvent.OnCheckForCrossCombo);
+        OnCrossListRenew();
+    }
+
+    public void OnCheckForCrossCombo()
+    {
+        int listCount = neighbors.Count;
+        int neighborCrossCount = 0;
+        for (int i = 0; i < listCount; i++)
+        {
+            if (neighbors[i].GetComponent<SquareController>()._isChosen)
+            {
+                neighborCrossCount++;
+            }
+        }
+
+        if (neighborCrossCount < 2 || !_isChosen)
+            return;
+
+        for (int i = 0; i < listCount; i++)
+        {
+            if (neighbors[i].GetComponent<SquareController>()._isChosen && !manager.lists.willBeDestroy.Contains(neighbors[i].gameObject))
+            {
+                manager.lists.willBeDestroy.Add(neighbors[i].gameObject);
+            }
+        }
+
+        if (!manager.lists.willBeDestroy.Contains(gameObject))
+        {
+            manager.lists.willBeDestroy.Add(gameObject);
+        }
+    }
+
+    void OnCrossListRenew()
+    {
+        List<GameObject> destroyList = manager.lists.willBeDestroy;
+        int listCount = destroyList.Count;
+
+        if (listCount == 0)
+            return;
+
+        for (int i = 0; i < listCount; i++)
+        {
+            SquareController squareController = destroyList[i].GetComponent<SquareController>();
+            squareController.crossObject.GetComponent<Animator>().SetBool("isChosen", false);
+            squareController._isChosen = false;
+        }
+        destroyList.Clear();
+
+        manager.ints.matchCount++;
+        uiManager.texts.matchCountText.text = "Match Count: " + manager.ints.matchCount;
+    }
+
+    ////////////////////////////// EVENTS ////////////////////////////
+    public void OnEnable()
+    {
+        EventManager.AddHandler(GameEvent.OnCheckForCrossCombo, OnCheckForCrossCombo);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.RemoveHandler(GameEvent.OnCheckForCrossCombo, OnCheckForCrossCombo);
     }
 }

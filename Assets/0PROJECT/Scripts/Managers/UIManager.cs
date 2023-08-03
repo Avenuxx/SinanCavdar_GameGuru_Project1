@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public struct Texts
     {
         public TMP_InputField inputText;
+        public TextMeshProUGUI matchCountText;
     }
 
     public Texts texts;

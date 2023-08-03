@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squarePrefab: {fileID: 838590773368815968, guid: 1d64cc64788e9b84da85875752806151, type: 3}
-  gridSize: 5
+  gridSize: 4
   padding: 0.14
 --- !u!4 &1155353906
 Transform:
@@ -424,17 +424,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1848147510 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1113417911120329782, guid: b84a53846b5adbf4cb248df8d3d0094e, type: 3}
-  m_PrefabInstance: {fileID: 1113417909541667328}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1113417909541667328
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -530,10 +519,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1302487558463461654, guid: b84a53846b5adbf4cb248df8d3d0094e, type: 3}
-      propertyPath: texts.inputText
-      value: 
-      objectReference: {fileID: 1848147510}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b84a53846b5adbf4cb248df8d3d0094e, type: 3}
 --- !u!1001 &2048902121456389254
@@ -586,6 +571,18 @@ PrefabInstance:
     - target: {fileID: 2048902120527815154, guid: 63cfc3a7549a6e44c864756185264cac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048902120527815157, guid: 63cfc3a7549a6e44c864756185264cac, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048902120527815157, guid: 63cfc3a7549a6e44c864756185264cac, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.79503703
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048902120527815157, guid: 63cfc3a7549a6e44c864756185264cac, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2048902120527815159, guid: 63cfc3a7549a6e44c864756185264cac, type: 3}
       propertyPath: m_Name
