@@ -7,7 +7,7 @@ public class GridGenerator : MonoBehaviour
 
     public GameObject squarePrefab;
     public int gridSize;
-    public float padding;
+    public float gridSpace;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class GridGenerator : MonoBehaviour
 
     private void OnGenerateGrid()
     {
-        if (uiManager.texts.inputText.text == string.Empty)
+        if (string.IsNullOrEmpty(uiManager.texts.inputText.text))
             return;
 
         ClearOldGrid();
@@ -34,31 +34,25 @@ public class GridGenerator : MonoBehaviour
 
     void ClearOldGrid()
     {
-        if (manager.lists.currentSquares.Count == 0)
-            return;
-
-        int listCount = manager.lists.currentSquares.Count;
-        for (int i = 0; i < listCount; i++)
+        foreach (GameObject square in manager.lists.currentSquares)
         {
-            Destroy(manager.lists.currentSquares[i]);
+            Destroy(square);
         }
-
         manager.lists.currentSquares.Clear();
     }
 
     void SetSize()
     {
         gridSize = int.Parse(uiManager.texts.inputText.text);
-
-        padding = 1 / (float)(gridSize * .65f);
+        gridSpace = 1 / (float)(gridSize * .65f);
     }
 
     void CreateSquare()
     {
-        float screenHeight = (Camera.main.orthographicSize-0.5f) * 2.0f;
+        float screenHeight = (Camera.main.orthographicSize - 0.5f) * 2.0f;
         float screenWidth = screenHeight * Camera.main.aspect;
 
-        float squareSize = (Mathf.Min(screenHeight, screenWidth) - padding * (gridSize - 1)) / gridSize;
+        float squareSize = (Mathf.Min(screenHeight, screenWidth) - gridSpace * (gridSize - 1)) / gridSize;
 
         for (int row = 0; row < gridSize; row++)
         {
@@ -72,10 +66,10 @@ public class GridGenerator : MonoBehaviour
                 squareController.xPosition = col;
                 squareController.yPosition = row;
 
-                float offsetX = (gridSize * squareSize + padding * (gridSize - 1)) / 2 - squareSize / 2;
-                float offsetY = (gridSize * squareSize + padding * (gridSize - 1)) / 2 - squareSize / 2;
+                float offsetX = (gridSize * squareSize + gridSpace * (gridSize - 1)) / 2 - squareSize / 2;
+                float offsetY = (gridSize * squareSize + gridSpace * (gridSize - 1)) / 2 - squareSize / 2;
 
-                square.transform.position = new Vector3(col * (squareSize + padding) - offsetX, row * (squareSize + padding) - offsetY + 1, 10f);
+                square.transform.position = new Vector3(col * (squareSize + gridSpace) - offsetX, row * (squareSize + gridSpace) - offsetY + 1, 10f);
 
                 square.transform.localScale = new Vector3(squareSize, squareSize, 1f);
 

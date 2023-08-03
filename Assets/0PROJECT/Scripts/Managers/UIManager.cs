@@ -19,5 +19,6 @@ public class UIManager : MonoBehaviour
    public void ReGenerate()
     {
         EventManager.Broadcast(GameEvent.OnGenerateGrid);
+        EventManager.Broadcast(GameEvent.OnPlaySound, "Rebuild");
     }
 }

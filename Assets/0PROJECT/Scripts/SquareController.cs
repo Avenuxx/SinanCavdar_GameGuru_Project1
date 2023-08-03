@@ -28,24 +28,22 @@ public class SquareController : MonoBehaviour
         CheckForNeighbors();
     }
 
-    void CheckForNeighbors()
+    private void CheckForNeighbors()
     {
         List<GameObject> currentSquaresList = manager.lists.currentSquares;
-        int currentSquaresCount = manager.lists.currentSquares.Count;
-        for (int i = 0; i < currentSquaresCount; i++)
+        foreach (GameObject square in currentSquaresList)
         {
-            SquareController squareController = currentSquaresList[i].GetComponent<SquareController>();
-            PositionCheck(squareController, -1, 0);
-            PositionCheck(squareController, 0, -1);
-            PositionCheck(squareController, 1, 0);
-            PositionCheck(squareController, 0, 1);
+            SquareController squareController = square.GetComponent<SquareController>();
+            if (PositionCheck(squareController, -1, 0) || PositionCheck(squareController, 0, -1)
+                || PositionCheck(squareController, 1, 0) || PositionCheck(squareController, 0, 1))
+            {
+                neighbors.Add(squareController);
+            }
         }
     }
-
-    void PositionCheck(SquareController squareController, int plusPosX, int plusPosY)
+    private bool PositionCheck(SquareController squareController, int plusPosX, int plusPosY)
     {
-        if (squareController.xPosition == this.xPosition + plusPosX && squareController.yPosition == this.yPosition + plusPosY)
-            neighbors.Add(squareController);
+        return squareController.xPosition == xPosition + plusPosX && squareController.yPosition == yPosition + plusPosY;
     }
 
     void Update()
@@ -58,16 +56,16 @@ public class SquareController : MonoBehaviour
         _isChosen = true;
         crossObject.GetComponent<Animator>().SetBool("isChosen", true);
         EventManager.Broadcast(GameEvent.OnCheckForCrossCombo);
+        EventManager.Broadcast(GameEvent.OnPlaySound, "ButtonClick");
         OnCrossListRenew();
     }
 
     public void OnCheckForCrossCombo()
     {
-        int listCount = neighbors.Count;
         int neighborCrossCount = 0;
-        for (int i = 0; i < listCount; i++)
+        foreach (SquareController neighbor in neighbors)
         {
-            if (neighbors[i].GetComponent<SquareController>()._isChosen)
+            if (neighbor._isChosen)
             {
                 neighborCrossCount++;
             }
@@ -76,11 +74,11 @@ public class SquareController : MonoBehaviour
         if (neighborCrossCount < 2 || !_isChosen)
             return;
 
-        for (int i = 0; i < listCount; i++)
+        foreach (SquareController neighbor in neighbors)
         {
-            if (neighbors[i].GetComponent<SquareController>()._isChosen && !manager.lists.willBeDestroy.Contains(neighbors[i].gameObject))
+            if (neighbor._isChosen && !manager.lists.willBeDestroy.Contains(neighbor.gameObject))
             {
-                manager.lists.willBeDestroy.Add(neighbors[i].gameObject);
+                manager.lists.willBeDestroy.Add(neighbor.gameObject);
             }
         }
 
@@ -90,17 +88,15 @@ public class SquareController : MonoBehaviour
         }
     }
 
-    void OnCrossListRenew()
+    private void OnCrossListRenew()
     {
         List<GameObject> destroyList = manager.lists.willBeDestroy;
-        int listCount = destroyList.Count;
-
-        if (listCount == 0)
+        if (destroyList.Count == 0)
             return;
 
-        for (int i = 0; i < listCount; i++)
+        foreach (GameObject destroySquare in destroyList)
         {
-            SquareController squareController = destroyList[i].GetComponent<SquareController>();
+            SquareController squareController = destroySquare.GetComponent<SquareController>();
             squareController.crossObject.GetComponent<Animator>().SetBool("isChosen", false);
             squareController._isChosen = false;
         }
@@ -108,6 +104,7 @@ public class SquareController : MonoBehaviour
 
         manager.ints.matchCount++;
         uiManager.texts.matchCountText.text = "Match Count: " + manager.ints.matchCount;
+        EventManager.Broadcast(GameEvent.OnPlaySound, "Pop");
     }
 
     ////////////////////////////// EVENTS ////////////////////////////
