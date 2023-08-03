@@ -17,7 +17,7 @@ public class GridGenerator : MonoBehaviour
 
     private void Start()
     {
-        OnGenerateGrid();
+        CreateSquare();
     }
 
     private void OnGenerateGrid()
@@ -55,7 +55,7 @@ public class GridGenerator : MonoBehaviour
 
     void CreateSquare()
     {
-        float screenHeight = Camera.main.orthographicSize * 2.0f;
+        float screenHeight = (Camera.main.orthographicSize-0.5f) * 2.0f;
         float screenWidth = screenHeight * Camera.main.aspect;
 
         float squareSize = (Mathf.Min(screenHeight, screenWidth) - padding * (gridSize - 1)) / gridSize;

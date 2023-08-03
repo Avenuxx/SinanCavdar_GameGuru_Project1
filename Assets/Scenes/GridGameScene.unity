@@ -377,7 +377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   squarePrefab: {fileID: 838590773368815968, guid: 1d64cc64788e9b84da85875752806151, type: 3}
   gridSize: 4
-  padding: 0.14
+  padding: 0.38
 --- !u!4 &1155353906
 Transform:
   m_ObjectHideFlags: 0
@@ -571,6 +571,10 @@ PrefabInstance:
     - target: {fileID: 2048902120527815154, guid: 63cfc3a7549a6e44c864756185264cac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048902120527815157, guid: 63cfc3a7549a6e44c864756185264cac, type: 3}
+      propertyPath: orthographic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2048902120527815157, guid: 63cfc3a7549a6e44c864756185264cac, type: 3}
       propertyPath: m_BackGroundColor.b
