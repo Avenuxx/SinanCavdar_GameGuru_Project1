@@ -17,7 +17,7 @@ public class GridGenerator : MonoBehaviour
 
     private void OnGenerateGrid()
     {
-        if (uiManager.texts.inputText.text == "")
+        if (uiManager.texts.inputText.text == string.Empty)
             return;
 
         ClearOldGrid();
@@ -50,6 +50,8 @@ public class GridGenerator : MonoBehaviour
 
     void CreateSquare()
     {
+        //grid = new SquareController[gridSize, gridSize];
+
         float screenHeight = Camera.main.orthographicSize * 2.0f;
         float screenWidth = screenHeight * Camera.main.aspect;
 
@@ -60,6 +62,11 @@ public class GridGenerator : MonoBehaviour
             for (int col = 0; col < gridSize; col++)
             {
                 GameObject square = Instantiate(squarePrefab, transform);
+
+                SquareController squareController = square.GetComponent<SquareController>();
+
+                squareController.xPosition = col;
+                squareController.yPosition = row;
 
                 float offsetX = (gridSize * squareSize + padding * (gridSize - 1)) / 2 - squareSize / 2;
                 float offsetY = (gridSize * squareSize + padding * (gridSize - 1)) / 2 - squareSize / 2;
