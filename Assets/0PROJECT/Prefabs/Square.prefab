@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 5964826654904107908}
   - component: {fileID: 8578258987198971460}
   - component: {fileID: 5875644604328207953}
+  - component: {fileID: 8595319619066832389}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -230,8 +231,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c21d9597030b1c14a8f9880dafa4081b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  uiManager: {fileID: 0}
   neighbors: []
   crossObject: {fileID: 66828235167425672}
   xPosition: 0
   yPosition: 0
   _isChosen: 0
+--- !u!114 &8595319619066832389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838590773368815968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b19d0cabcdbdd4b940649f2f98c24c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

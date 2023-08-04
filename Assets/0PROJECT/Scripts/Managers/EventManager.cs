@@ -7,6 +7,8 @@ public enum GameEvent
     OnGenerateGrid,
     OnCheckForCrossCombo,
     OnPlaySound,
+    OnCrossListRenew,
+    OnAddForDestroy,
 }
 public static class EventManager
 {

@@ -5,7 +5,11 @@ public class GridGenerator : MonoBehaviour
     GameManager manager;
     UIManager uiManager;
 
+    [Header("GameObjects")]
     public GameObject squarePrefab;
+
+    [Space(10)]
+    [Header("Ints & Floats")]
     public int gridSize;
     public float gridSpace;
 
@@ -26,9 +30,7 @@ public class GridGenerator : MonoBehaviour
             return;
 
         ClearOldGrid();
-
         SetSize();
-
         CreateSquare();
     }
 
@@ -79,9 +81,8 @@ public class GridGenerator : MonoBehaviour
     }
 
 
-
     ////////////////////////////// EVENTS ////////////////////////////
-    public void OnEnable()
+    private void OnEnable()
     {
         EventManager.AddHandler(GameEvent.OnGenerateGrid, OnGenerateGrid);
     }

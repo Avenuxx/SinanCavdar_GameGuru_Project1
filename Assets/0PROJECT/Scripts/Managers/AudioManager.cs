@@ -7,12 +7,10 @@ public class AudioManager : MonoBehaviour
 {
     public AudioSource audioPlay;
     public AudioSource soundPlay;
-    float timer;
 
     private void Awake()
     {
         // DontDestroyOnLoad(this.gameObject);
-
     }
 
     void Update()
@@ -29,7 +27,6 @@ public class AudioManager : MonoBehaviour
     {
         EventManager.RemoveHandler(GameEvent.OnPlaySound, OnPlaySound);
     }
-
 
     private void OnPlaySound(object value)
     {
