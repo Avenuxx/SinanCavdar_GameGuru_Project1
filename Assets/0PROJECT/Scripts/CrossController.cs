@@ -17,6 +17,7 @@ public class CrossController : MonoBehaviour
 
     public void OnCheckForCrossCombo()
     {
+        //CHECK FOR EVERY NEIGHBOR TO KNOW HOW MANY OF THEM GOT CROSS
         int neighborCrossCount = 0;
         foreach (SquareController neighbor in squareController.neighbors)
         {
@@ -26,6 +27,7 @@ public class CrossController : MonoBehaviour
             }
         }
 
+        //CHECK FOR CROSS COUNT THAT 2 NEIGHBORS HAVE CROSS OR NOT
         if (neighborCrossCount < 2 || !squareController._isChosen)
             return;
 
@@ -34,10 +36,12 @@ public class CrossController : MonoBehaviour
 
     private void OnCrossListRenew(object value)
     {
+        //SET DESTROY SQUARE LIST
         List<GameObject> destroyList = manager.lists.willBeDestroy;
         if (destroyList.Count == 0 || (GameObject)value != this.gameObject)
             return;
 
+        //DESTROY SQUARES GOT TRIPLE CROSS
         foreach (GameObject destroySquare in destroyList)
         {
             SquareController squareController = destroySquare.GetComponent<SquareController>();
@@ -46,6 +50,7 @@ public class CrossController : MonoBehaviour
         }
         destroyList.Clear();
 
+        //EARN SCORE AND SET SCORE TEXT
         manager.ints.matchCount++;
         uiManager.texts.matchCountText.text = "Match Count: " + manager.ints.matchCount;
         EventManager.Broadcast(GameEvent.OnPlaySound, "Pop");
@@ -56,6 +61,7 @@ public class CrossController : MonoBehaviour
         if ((GameObject)value != this.gameObject)
             return;
 
+        //ADD SQUARES WITH CROSS TO DESTROY LIST
         foreach (SquareController neighbor in squareController.neighbors)
         {
             if (neighbor._isChosen && !manager.lists.willBeDestroy.Contains(neighbor.gameObject))
@@ -64,6 +70,7 @@ public class CrossController : MonoBehaviour
             }
         }
 
+        //IF LIST DOESNT CONTAINS GAMEOBJECT ADD ALSO THIS GAMEOBJECT
         if (!manager.lists.willBeDestroy.Contains(gameObject))
         {
             manager.lists.willBeDestroy.Add(gameObject);

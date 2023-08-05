@@ -37,10 +37,13 @@ public class SquareController : MonoBehaviour
 
     private void CheckForNeighbors()
     {
+        //ADD NEIGHBORS TO LIST
         List<GameObject> currentSquaresList = manager.lists.currentSquares;
         foreach (GameObject square in currentSquaresList)
         {
             SquareController squareController = square.GetComponent<SquareController>();
+
+            //CHECK FOR EVERY SIDE OF THE SQUARE
             if (PositionCheck(squareController, -1, 0) || PositionCheck(squareController, 0, -1)
                 || PositionCheck(squareController, 1, 0) || PositionCheck(squareController, 0, 1))
             {
@@ -49,6 +52,7 @@ public class SquareController : MonoBehaviour
         }
     }
 
+    //CHECK NEIGHBORS POSITIONS FOR LIST
     private bool PositionCheck(SquareController squareController, int plusPosX, int plusPosY)
     {
         return squareController.xPosition == xPosition + plusPosX && squareController.yPosition == yPosition + plusPosY;

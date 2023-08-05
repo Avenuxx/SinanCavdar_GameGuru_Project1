@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Return))
         {
+            //GENERATE GRID EVENT
             EventManager.Broadcast(GameEvent.OnGenerateGrid);
         }
     }
