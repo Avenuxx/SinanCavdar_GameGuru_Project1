@@ -46,3 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lists:
     currentSquares: []
+    willBeDestroy: []
+  ints:
+    matchCount: 0

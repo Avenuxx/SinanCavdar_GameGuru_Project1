@@ -30,6 +30,13 @@ public class GridGenerator : MonoBehaviour
         if (string.IsNullOrEmpty(uiManager.texts.inputText.text))
             return;
 
+        if(int.Parse(uiManager.texts.inputText.text) > 30)
+        {
+            ClearOldGrid();
+            return;
+        }
+
+
         ClearOldGrid();
         SetSize();
         CreateSquare();
