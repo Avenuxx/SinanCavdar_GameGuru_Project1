@@ -60,6 +60,9 @@ public class SquareController : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (_isChosen == true)
+            return;
+
         _isChosen = true;
         crossObject.GetComponent<Animator>().SetBool("isChosen", true);
         EventManager.Broadcast(GameEvent.OnCheckForCrossCombo);
