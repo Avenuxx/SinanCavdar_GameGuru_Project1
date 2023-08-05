@@ -21,6 +21,11 @@ public class GameManager : MonoBehaviour
     public Lists lists;
     public Ints ints;
 
+    private void Start()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Return))

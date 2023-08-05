@@ -32,7 +32,7 @@ public class GridGenerator : MonoBehaviour
 
         if(int.Parse(uiManager.texts.inputText.text) > 30)
         {
-            ClearOldGrid();
+            uiManager.texts.inputText.text = "";
             return;
         }
 
